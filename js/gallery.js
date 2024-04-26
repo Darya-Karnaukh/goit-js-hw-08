@@ -66,33 +66,28 @@ const images = [
 
 const list = document.querySelector(".gallery");
 
-const listImages = images.map((image) => `<li class="gallery-item">
-<a class="gallery-link" href="${image.original}"> 
-<img class="gallery-image" src="${image.preview}" data-source="${image.original}" alt="${image.description}"/> 
-</a>
-</li>`).join('');
+    const listImages = images.map((image) => `
+        <li class="gallery-item">
+            <a class="gallery-link" href="${image.original}">
+                <img class="gallery-image" src="${image.preview}" data-source="${image.original}" alt="${image.description}" />
+            </a>
+        </li>
+    `).join('');
 
-list.insertAdjacentHTML("beforeend", listImages);
+    list.innerHTML = listImages;
 
-list.addEventListener('click', (event) => {
-    event.preventDefault();
-})
+    list.addEventListener('click', (event) => {
+        event.preventDefault();
 
-
-const galleryElements = document.querySelectorAll('.gallery-item');
-
-galleryElements.forEach(element => {
-
-    const imageLink = element.querySelector('.gallery-link');
-
-    imageLink.addEventListener('click', (event) => {
-
-        const imageURL = imageLink.getAttribute('href');
-        
-        const instance = basicLightbox.create(`<img src="${imageURL}">`);
-        instance.show();
+            if (event.target.classList.contains('gallery-image')) {
+            const imageURL = event.target.getAttribute('data-source');
+            const instance = basicLightbox.create(`<img src="${imageURL}">`);
+            instance.show();
+        }
     });
-});
+
+
+
 
 
 
